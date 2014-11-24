@@ -1,0 +1,1 @@
+var IndexApp = angular.module('IndexApp', ['ui.bootstrap']);

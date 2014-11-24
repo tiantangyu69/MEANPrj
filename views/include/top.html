@@ -1,0 +1,38 @@
+<!-- Fixed navbar -->
+<div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="/">NodeJs-Blog</a>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                <li class="active"><a href="/">首页</a></li>
+                <li><a href="#about">博文目录</a></li>
+                <li><a href="#contact">图片</a></li>
+                <li><a href="/user">用户</a></li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">更多<span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#">下载</a></li>
+                        <li><a href="#">关于</a></li>
+                        <li class="divider"></li>
+                        <li class="dropdown-header">Nav header</li>
+                        <li><a href="#">Separated link</a></li>
+                        <li><a href="#">One more separated link</a></li>
+                    </ul>
+                </li>
+            </ul>
+
+            <div class="navbar-right">
+                <%if(null == session.user){%>
+                    <a class="btn btn-default navbar-btn" href="/user/login">登录</a>
+                    <a class="btn btn-primary navbar-btn" href="/regist">注册</a>
+                    <%} else{%>
+                    <span style="color: #ffffff">欢迎您：<%=session.user%>&nbsp;&nbsp;</span>
+                    <a href="/logout" class="btn btn-success navbar-btn">退出</a>
+                <%}%>
+            </div>
+        </div>
+        <!--/.nav-collapse -->
+    </div>
+</div>
