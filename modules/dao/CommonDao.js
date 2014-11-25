@@ -1,5 +1,4 @@
 var page = require('../util/Page');
-var async = require('async');
 
 /**
  * 所有Dao的父类
@@ -55,12 +54,12 @@ CommonDao.prototype.fetch = function (id, callback) {
 
 /**
  * 按条件查询单个对象
- * @param condition 查询条件json语句
+ * @param query 查询条件json语句
  * @param callback 回调函数，返回查询的结果
  */
-CommonDao.prototype.findOne = function(condition, callback){
-    condition = condition || {};
-    this.model.findOne(condition, function(err, model){
+CommonDao.prototype.findOne = function(query, callback){
+    query = query || {};
+    this.model.findOne(query, function(err, model){
         if(err) return callback(null);
 
         return callback(model);
@@ -70,11 +69,11 @@ CommonDao.prototype.findOne = function(condition, callback){
 /**
  * 去除重复对象进行查询
  * @param field 查询的字段
- * @param conditions 查询的条件json
+ * @param query 查询的条件json
  * @param callback 回调函数，返回查询数据
  */
-CommonDao.prototype.distinct = function(field, conditions, callback){
-    this.model.distinct(field, conditions, function(err, models){
+CommonDao.prototype.distinct = function(field, query, callback){
+    this.model.distinct(field, query, function(err, models){
         if(err) return callback(null);
 
         return callback(models);
@@ -84,12 +83,25 @@ CommonDao.prototype.distinct = function(field, conditions, callback){
 /**
  * 按条件查询数据
  * @param query 查询条件json
- * @param fileds 查询哪些字段
- * @param opt 选项
  * @param callback 回调函数，返回查询的对象
  */
-CommonDao.prototype.findByQuery = function (query, fileds, opt, callback) {
-    this.model.find(query, fileds, opt, function (error, model) {
+CommonDao.prototype.query = function (query, callback) {
+    this.queryAndSort(query, null, function(list){
+        return callback(list);
+    })
+};
+
+/**
+ * 按条件查询数据并排序
+ * @param query 查询条件json
+ * @param sort 排序json
+ * @param callback 回调函数，返回查询的数据
+ */
+CommonDao.prototype.queryAndSort = function (query, sort, callback) {
+    sort = sort || {};
+    var queryOpt = this.model.find(query);
+    queryOpt.sort(sort);
+    queryOpt.exec(function (error, model) {
         if (error) return callback(null);
 
         return callback(model);
@@ -100,8 +112,22 @@ CommonDao.prototype.findByQuery = function (query, fileds, opt, callback) {
  * 查询所有数据
  * @param callback 回调函数，返回查询的数据
  */
-CommonDao.prototype.findAll = function (callback) {
-    this.model.find({}, function (error, model) {
+CommonDao.prototype.findAll = function(callback){
+    this.findAllAndSort(null, function(list){
+        return callback(list);
+    })
+}
+
+/**
+ * 查询所有数据并排序
+ * @param sort 排序json
+ * @param callback 回调函数，返回查询的数据
+ */
+CommonDao.prototype.findAllAndSort = function (sort, callback) {
+    sort = sort || {};
+    var query = this.model.find({});
+    query.sort(sort);
+    query.exec(function (error, model) {
         if (error) return callback(null);
 
         return callback(model);
@@ -109,27 +135,52 @@ CommonDao.prototype.findAll = function (callback) {
 };
 
 /**
+ * 查询所有数据并分页
+ * @param currentPage 当前页码
+ * @param pageSize 每页显示的条数
+ * @param callback 回调函数返回查询的结果
+ */
+CommonDao.prototype.page = function(currentPage, pageSize, callback){
+    this.queryPageAndSort(currentPage, pageSize, null, null, function(page){
+        return callback(page);
+    });
+};
+
+/**
+ * 按条件查询数据并分页
+ * @param currentPage 当前页码
+ * @param pageSize 每页显示的条数
+ * @param query 查询条件json字符串
+ * @param callback 回调函数，返回查询的数据
+ */
+CommonDao.prototype.queryPage = function(currentPage, pageSize, query,callback){
+    this.queryPageAndSort(currentPage, pageSize, query, null, function(page){
+        return callback(page);
+    })
+}
+
+/**
  * 查询分页数据
  * @param currentPage 当前页面
  * @param pageSize 每页显示的条数
- * @param conditions 查询条件json字符串
+ * @param query 查询条件json字符串
  * @param sort 排序json
  * @param callback 回调函数，返回查询的数据
  */
-CommonDao.prototype.queryPage = function(currentPage, pageSize, conditions, sort,callback){
+CommonDao.prototype.queryPageAndSort = function(currentPage, pageSize, query, sort,callback){
     var $this = this;
-    conditions = conditions || {};
+    query = query || {};
     pageSize = pageSize || 15;
     currentPage = currentPage || 1;
     sort = sort || {};
 
-    var query = $this.model.find(conditions);
-    query.sort(sort).limit(pageSize);
-    query.skip((currentPage - 1) * pageSize);
-    query.exec(function (err, data) {
+    var queryOpt = $this.model.find(query);
+    queryOpt.sort(sort).limit(pageSize);
+    queryOpt.skip((currentPage - 1) * pageSize);
+    queryOpt.exec(function (err, data) {
         if(err) return callback(null);
 
-        $this.model.count(conditions, function (error, count) {
+        $this.model.count(query, function (error, count) {
             if (error) return callback(null);
 
             return callback(new page(currentPage, pageSize, count, data));
@@ -138,9 +189,19 @@ CommonDao.prototype.queryPage = function(currentPage, pageSize, conditions, sort
 };
 
 /**
+ * 查询记录数
+ * @param callback 回调函数，返回查询到数目
+ */
+CommonDao.prototype.count = function(callback){
+    this.countByQuery(null, function(count){
+        return callback(count);
+    });
+}
+
+/**
  * 根据条件查询记录数
  * @param query 查询条件json
- * @param callback 回调函数，返回查询到的对象
+ * @param callback 回调函数，返回查询到的数目
  */
 CommonDao.prototype.countByQuery = function (query, callback) {
     this.model.count(query, function (error, model) {
@@ -156,23 +217,32 @@ CommonDao.prototype.countByQuery = function (query, callback) {
  * @param callback
  */
 CommonDao.prototype.deleteById = function (id, callback) {
-    this.model.remove({_id: id}, function (error) {
-        console.log(id);
-        if (error) return callback(error);
-
-        return callback(null);
+    this.deleteByQuery({_id: id}, function(error){
+        callback(error);
     });
 };
 
 /**
+ * 根据查询条件删除对象
+ * @param query 查询条件
+ * @param callback
+ */
+CommonDao.prototype.deleteByQuery = function(query, callback){
+    this.model.remove(query, function (error) {
+        if (error) return callback(error);
+
+        return callback(null);
+    });
+}
+
+/**
  * 按条件更新数据
- * @param conditions 查询条件
+ * @param query 查询条件
  * @param update 更新数据
- * @param options 选项
  * @param callback 回调函数
  */
-CommonDao.prototype.update = function (conditions, update, options, callback) {
-    this.model.update(conditions, update, options, function (error) {
+CommonDao.prototype.update = function (query, update, callback) {
+    this.model.update(query, update, null, function (error) {
         if (error) return callback(error);
 
         return callback(null);
