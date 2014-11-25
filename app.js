@@ -77,7 +77,7 @@ app.use(function(err, req, res, next) {
 });
 
 // 连接mongodb数据库
-mongoose.connect('mongodb://127.0.0.1:27017/NodeJS');
+mongoose.connect('mongodb://127.0.0.1:27017/MEANBlog');
 
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'mongodb connection error:'));
