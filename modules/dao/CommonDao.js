@@ -1,3 +1,6 @@
+var page = require('../util/Page');
+var async = require('async');
+
 /**
  * 所有Dao的父类
  * Author: LIZHITAO
@@ -51,6 +54,34 @@ CommonDao.prototype.fetch = function (id, callback) {
 };
 
 /**
+ * 按条件查询单个对象
+ * @param condition 查询条件json语句
+ * @param callback 回调函数，返回查询的结果
+ */
+CommonDao.prototype.findOne = function(condition, callback){
+    condition = condition || {};
+    this.model.findOne(condition, function(err, model){
+        if(err) return callback(null);
+
+        return callback(model);
+    });
+}
+
+/**
+ * 去除重复对象进行查询
+ * @param field 查询的字段
+ * @param conditions 查询的条件json
+ * @param callback 回调函数，返回查询数据
+ */
+CommonDao.prototype.distinct = function(field, conditions, callback){
+    this.model.distinct(field, conditions, function(err, models){
+        if(err) return callback(null);
+
+        return callback(models);
+    });
+}
+
+/**
  * 按条件查询数据
  * @param query 查询条件json
  * @param fileds 查询哪些字段
@@ -82,19 +113,27 @@ CommonDao.prototype.findAll = function (callback) {
  * @param currentPage 当前页面
  * @param pageSize 每页显示的条数
  * @param conditions 查询条件json字符串
+ * @param sort 排序json
  * @param callback 回调函数，返回查询的数据
  */
-CommonDao.prototype.queryPage = function(currentPage, pageSize, conditions, callback){
+CommonDao.prototype.queryPage = function(currentPage, pageSize, conditions, sort,callback){
+    var $this = this;
     conditions = conditions || {};
     pageSize = pageSize || 15;
     currentPage = currentPage || 1;
-    var query = this.model.find(conditions);
-    query.limit(pageSize);
+    sort = sort || {};
+
+    var query = $this.model.find(conditions);
+    query.sort(sort).limit(pageSize);
     query.skip((currentPage - 1) * pageSize);
     query.exec(function (err, data) {
         if(err) return callback(null);
 
-        return callback(data);
+        $this.model.count(conditions, function (error, count) {
+            if (error) return callback(null);
+
+            return callback(new page(currentPage, pageSize, count, data));
+        });
     });
 };
 
