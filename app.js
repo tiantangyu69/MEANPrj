@@ -10,6 +10,7 @@ var multer = require('multer');
 var mongoose = require('mongoose');
 var indexRouter = require('./routes/IndexRouter');
 var userRouter = require('./routes/UserRouter');
+var manageMainRouter = require('./routes/ManageMainRouter');
 
 var app = express();
 
@@ -44,6 +45,7 @@ app.use(function(req, res, next) {
 // 配置router
 app.use(indexRouter);
 app.use(userRouter);
+app.use(manageMainRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

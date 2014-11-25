@@ -1,0 +1,52 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>后台管理系统</title>
+    <link rel="stylesheet" href="/javascripts/common/jquery-easyui-1.4/themes/default/easyui.css"/>
+    <link rel="stylesheet" href="/javascripts/common/jquery-easyui-1.4/themes/icon.css"/>
+
+    <script type="text/javascript" src="/javascripts/common/jquery-1.10.2.min.js"></script>
+    <script type="text/javascript" src="/javascripts/common/jquery-easyui-1.4/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="/javascripts/common/jquery-easyui-1.4/local/easyui-lang-zh_CN.js"></script>
+    <style type="text/css">
+        .nav_bar {
+            height: 50px;
+            background-repeat: no-repeat;
+            background-position: 100% -50px;
+            background-color: #102c4a;
+        }
+    </style>
+</head>
+<body>
+
+<div class="easyui-layout" data-options="fit:true">
+    <div data-options="region:'north'" style="height:50px;" class="nav_bar"></div>
+    <div data-options="region:'south',split:true" style="height:30px;"></div>
+    <div data-options="region:'west',split:true" title="系统操作菜单" style="width:160px;">
+        <div class="easyui-accordion" data-options="fit:true, border: false">
+            <div title="系统管理" data-options="iconCls:'icon-ok'">
+                <ul class="easyui-tree" data-options="lines:true">
+                    <li>用户管理</li>
+                    <li>角色管理</li>
+                    <li>数据字典</li>
+                </ul>
+            </div>
+            <div title="帮助" data-options="iconCls:'icon-help'">
+                <ul class="easyui-tree" data-options="lines:true">
+                    <li>系统手册</li>
+                    <li>售后客服</li>
+                    <li>问题反馈</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div data-options="region:'center'">
+        <div class="easyui-tabs" data-options="tools:'#tab-tools', border: false, fit: true">
+            <div title="主页"></div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
