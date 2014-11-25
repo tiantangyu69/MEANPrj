@@ -51,19 +51,6 @@ CommonDao.prototype.fetch = function (id, callback) {
 };
 
 /**
- * 根据条件查询记录数
- * @param query 查询条件json
- * @param callback 回调函数，返回查询到的对象
- */
-CommonDao.prototype.countByQuery = function (query, callback) {
-    this.model.count(query, function (error, model) {
-        if (error) return callback(null);
-
-        return callback(model);
-    });
-};
-
-/**
  * 按条件查询数据
  * @param query 查询条件json
  * @param fileds 查询哪些字段
@@ -84,6 +71,40 @@ CommonDao.prototype.findByQuery = function (query, fileds, opt, callback) {
  */
 CommonDao.prototype.findAll = function (callback) {
     this.model.find({}, function (error, model) {
+        if (error) return callback(null);
+
+        return callback(model);
+    });
+};
+
+/**
+ * 查询分页数据
+ * @param currentPage 当前页面
+ * @param pageSize 每页显示的条数
+ * @param conditions 查询条件json字符串
+ * @param callback 回调函数，返回查询的数据
+ */
+CommonDao.prototype.queryPage = function(currentPage, pageSize, conditions, callback){
+    conditions = conditions || {};
+    pageSize = pageSize || 15;
+    currentPage = currentPage || 1;
+    var query = this.model.find(conditions);
+    query.limit(pageSize);
+    query.skip((currentPage - 1) * pageSize);
+    query.exec(function (err, data) {
+        if(err) return callback(null);
+
+        return callback(data);
+    });
+};
+
+/**
+ * 根据条件查询记录数
+ * @param query 查询条件json
+ * @param callback 回调函数，返回查询到的对象
+ */
+CommonDao.prototype.countByQuery = function (query, callback) {
+    this.model.count(query, function (error, model) {
         if (error) return callback(null);
 
         return callback(model);
@@ -116,27 +137,6 @@ CommonDao.prototype.update = function (conditions, update, options, callback) {
         if (error) return callback(error);
 
         return callback(null);
-    });
-};
-
-/**
- * 查询分页数据
- * @param currentPage 当前页面
- * @param pageSize 每页显示的条数
- * @param conditions 查询条件json字符串
- * @param callback 回调函数，返回查询的数据
- */
-CommonDao.prototype.queryPage = function(currentPage, pageSize, conditions, callback){
-    conditions = conditions || {};
-    pageSize = pageSize || 15;
-    currentPage = currentPage || 1;
-    var query = this.model.find(conditions);
-    query.limit(pageSize);
-    query.skip((currentPage - 1) * pageSize);
-    query.exec(function (err, data) {
-        if(err) return callback(null);
-
-        return callback(data);
     });
 };
 
