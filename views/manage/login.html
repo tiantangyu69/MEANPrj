@@ -1,0 +1,68 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>系统登录</title>
+    <link rel="stylesheet" href="/stylesheets/login.css"/>
+    <script type="text/javascript" src="/javascripts/common/jquery-1.10.2.min.js"></script>
+    <script type="text/javascript" src="/javascripts/common/jquery.cookie.js"></script>
+    <script type="text/javascript" src="/javascripts/common/jquery.form.js"></script>
+    <script type="text/javascript" src="/javascripts/common/jquery.webbase-1.0.1.js"></script>
+    <script type="text/javascript" src="/javascripts/login.js"></script>
+</head>
+<body>
+    <div id="login">
+        <div class="inner">
+            <div style="position: absolute;left: -8px;top: -8px;"><img src="/images/typelogin.png"></img></div>
+            <div class="logo"><img src="/images/toplogo-jeecg.png"></div>
+            <div class="formLogin">
+                <form name="formLogin" id="formLogin" action="" method="post">
+                    <table class="input_280">
+                        <tr style="height: 25px;">
+                            <td colspan="3">
+                                <div class="float_left" id="errorImage" style="display: none;"><img src="/images/error.png" width="25" height="25"/></div>
+                                <div class="float_left" id="errorMsg" style='font-size:12px;color:red;height: 25px;line-height: 25px;'></div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="3">
+                                <div class="inputDiv userinput">
+                                    <input class="input_box" name="username" type="text" id="username" value="" maxlength="30"></input>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="3">
+                                <div class="inputDiv pwdinput">
+                                    <input class="input_box" name="password" type="password" id="password" value="" maxlength="30"/>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr height="20"></tr>
+                        <tr>
+                            <td>
+                                <div style="margin-top: 5px;" class="float_left"><input id="rememberAccount" type="checkbox"/></div>
+                                <div style="height: 30px;line-height: 30px;" class="float_left"><label for="rememberAccount">记住用户名 </label></div>
+                            </td>
+                            <td colspan="2" align="right">
+                                <div class="login_btn float_right" id="resetForm">重置</div>
+                                <div class="login_btn float_right" id="but_login">登录</div>
+                            </td>
+                        </tr>
+                    </table>
+                </form>
+            </div>
+        </div>
+        <div class="shadow"></div>
+    </div>
+    <div class="versionBar">
+        <div>© 版权所有 BaseWeb ( 推荐使用IE8+,谷歌浏览器可以获得更快,更安全的页面响应速度 ) 技术支持:BaseWeb</div>
+    </div>
+    <!-- 账号核实动态图片 -->
+    <div id="preload" class="proload">
+        <img src="/images/preloader.gif"></img>
+        <span>&nbsp;&nbsp;账号核实中...</span>
+    </div>
+</body>
+</html>
