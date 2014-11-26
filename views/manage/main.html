@@ -6,52 +6,66 @@
     <title>后台管理系统</title>
     <link rel="stylesheet" href="/javascripts/common/jquery-easyui-1.4/themes/default/easyui.css"/>
     <link rel="stylesheet" href="/javascripts/common/jquery-easyui-1.4/themes/icon.css"/>
+    <link rel="stylesheet" href="/stylesheets/manageMain.css"/>
 
     <script type="text/javascript" src="/javascripts/common/jquery-1.10.2.min.js"></script>
     <script type="text/javascript" src="/javascripts/common/jquery-easyui-1.4/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="/javascripts/common/jquery-easyui-1.4/locale/easyui-lang-zh_CN.js"></script>
     <script type="text/javascript" charset="utf-8" src="/ueditor/ueditor.config.js"></script>
     <script type="text/javascript" charset="utf-8" src="/ueditor/ueditor.all.js"> </script>
     <script type="text/javascript" charset="utf-8" src="/ueditor/lang/zh-cn/zh-cn.js"> </script>
+    <script type="text/javascript" src="/javascripts/main.js"></script>
 </head>
 <body>
-
-<div class="easyui-layout" data-options="fit:true">
-    <div data-options="region:'north'" style="height:50px; background-color: #102c4a;"></div>
-    <div data-options="region:'south',split:true" style="height:30px;"></div>
-    <div data-options="region:'west',split:true" title="系统操作菜单" style="width:160px;">
-        <div class="easyui-accordion" data-options="fit:true, border: false">
-            <div title="系统管理" data-options="iconCls:'icon-ok'">
-                <ul class="easyui-tree" data-options="lines:true">
-                    <li>用户管理</li>
-                    <li>角色管理</li>
-                    <li>数据字典</li>
-                </ul>
+    <div class="easyui-layout" data-options="fit:true">
+        <div data-options="region:'north', title: ' '" class="main_north">
+            <div style="float: left"><img src="/images/toplogo-main.png" width="600px" height="50px;"></div>
+            <!-- 右侧菜单div -->
+            <div class="absolute_right_bottom">
+                <span class="normalfont" style="color: #0081C2">&nbsp;欢迎您：<%=session.user.username%> 今天是：<span id="time"></span> </span>
+                <!-- 个人设置菜单 -->
+                <a href="javascript:void(0);" class="easyui-menubutton" menu="#person_settings_menu" iconCls="icon-help">个人设置</a>
+                <div id="person_settings_menu" class="top_menu_div">
+                    <div onclick="manageUser.toPersonSet(600, 360, '个人信息')"> 个人信息</div>
+                    <div class="menu-sep"></div>
+                    <div onclick="manageUser.toModifyPassword(500,200,'修改密码')"> 修改密码</div>
+                </div>
+                <!-- 退出系统菜单 -->
+                <a href="javascript:void(0);" class="easyui-menubutton" menu="#exit_system_menu" iconCls="icon-back">安全退出</a>
+                <div id="exit_system_menu" class="top_menu_div">
+                    <div class="menu-sep"></div>
+                    <div onclick="mangeUserLogout('/manage/logout');">退出系统</div>
+                </div>
             </div>
-            <div title="帮助" data-options="iconCls:'icon-help'">
-                <ul class="easyui-tree" data-options="lines:true">
-                    <li>系统手册</li>
-                    <li>售后客服</li>
-                    <li>问题反馈</li>
-                </ul>
-            </div>
+            <!-- 个人设置窗口 -->
+            <div id="personSet_Window" title="个人设置"></div>
+            <!-- 修改密码窗口 -->
+            <div id="modifyPassword_Window" title="修改密码"></div>
         </div>
-    </div>
-    <div data-options="region:'center'">
-        <div class="easyui-tabs" data-options="tools:'#tab-tools', border: false, fit: true">
-            <div title="主页">
-                <div style="width: 90%;margin: 10px auto 10px auto">
-                    <textarea rows="2" cols="2" id="editor" style="width:100%;height:500px;"></textarea>
+        <div data-options="region:'south',split:true" style="height:30px;"></div>
+        <div data-options="region:'west',split:true" title="系统操作菜单" style="width:160px;">
+            <div class="easyui-accordion" data-options="fit:true, border: false">
+                <div title="系统管理" data-options="iconCls:'icon-ok'">
+                    <ul class="easyui-tree" data-options="lines:true">
+                        <li>用户管理</li>
+                        <li>角色管理</li>
+                        <li>数据字典</li>
+                    </ul>
+                </div>
+                <div title="帮助" data-options="iconCls:'icon-help'">
+                    <ul class="easyui-tree" data-options="lines:true">
+                        <li>系统手册</li>
+                        <li>售后客服</li>
+                        <li>问题反馈</li>
+                    </ul>
                 </div>
             </div>
         </div>
+        <div data-options="region:'center'">
+            <div class="easyui-tabs" data-options="tools:'#tab-tools', border: false, fit: true">
+                <div title="主页"></div>
+            </div>
+        </div>
     </div>
-</div>
-<script type="text/javascript">
-    //实例化编辑器
-    //建议使用工厂方法getEditor创建和引用编辑器实例，如果在某个闭包下引用该编辑器，直接调用UE.getEditor('editor')就能拿到相关的实例
-    var ue = UE.getEditor('editor',{
-        imageScaleEnabled: false
-    });
-</script>
 </body>
 </html>

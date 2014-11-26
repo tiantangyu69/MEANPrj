@@ -85,6 +85,8 @@
 
         //,imagePopup:true      //图片操作的浮层开关，默认打开
 
+        ,imageScaleEnabled : false
+
         //,emotionLocalization:false //是否开启表情本地化，默认关闭。若要开启请确保emotion文件夹下包含官网提供的images表情文件夹
 
         //粘贴只保留标签，去除标签所有属性
