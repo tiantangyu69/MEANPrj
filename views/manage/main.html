@@ -40,16 +40,18 @@
         <div class="easyui-tabs" data-options="tools:'#tab-tools', border: false, fit: true">
             <div title="主页">
                 <div style="width: 90%;margin: 10px auto 10px auto">
-                    <script id="editor" type="text/plain" style="width:100%;height:300px;"></script>
+                    <textarea rows="2" cols="2" id="editor" style="width:100%;height:500px;"></textarea>
                 </div>
-                <script type="text/javascript">
-                    //实例化编辑器
-                    //建议使用工厂方法getEditor创建和引用编辑器实例，如果在某个闭包下引用该编辑器，直接调用UE.getEditor('editor')就能拿到相关的实例
-                    var ue = UE.getEditor('editor');
-                </script>
             </div>
         </div>
     </div>
 </div>
+<script type="text/javascript">
+    //实例化编辑器
+    //建议使用工厂方法getEditor创建和引用编辑器实例，如果在某个闭包下引用该编辑器，直接调用UE.getEditor('editor')就能拿到相关的实例
+    var ue = UE.getEditor('editor',{
+        imageScaleEnabled: false
+    });
+</script>
 </body>
 </html>

@@ -10,9 +10,9 @@ var multer = require('multer');
 var mongoose = require('mongoose');
 var ueditor = require("ueditor");
 
-var indexRouter = require('./routes/IndexRouter');
-var userRouter = require('./routes/UserRouter');
-var manageMainRouter = require('./routes/ManageMainRouter');
+var indexRouter = require('./modules/routes/IndexRouter');
+var userRouter = require('./modules/routes/UserRouter');
+var manageMainRouter = require('./modules/routes/ManageMainRouter');
 
 var app = express();
 

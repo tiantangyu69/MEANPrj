@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
-var UserDao = require('../modules/dao/UserDao');
-var CryptoUtil = require('../modules/util/CryptoUtil');
+var UserDao = require('../dao/UserDao');
+var CryptoUtil = require('../util/CryptoUtil');
 
 /**
  * 跳转到用户登录界面
