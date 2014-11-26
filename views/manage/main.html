@@ -9,12 +9,17 @@
     <link rel="stylesheet" href="/stylesheets/manageMain.css"/>
 
     <script type="text/javascript" src="/javascripts/common/jquery-1.10.2.min.js"></script>
+    <script type="text/javascript" src="/javascripts/common/jquery.form.js"></script>
     <script type="text/javascript" src="/javascripts/common/jquery-easyui-1.4/jquery.easyui.min.js"></script>
     <script type="text/javascript" src="/javascripts/common/jquery-easyui-1.4/locale/easyui-lang-zh_CN.js"></script>
+
     <script type="text/javascript" charset="utf-8" src="/ueditor/ueditor.config.js"></script>
     <script type="text/javascript" charset="utf-8" src="/ueditor/ueditor.all.js"> </script>
     <script type="text/javascript" charset="utf-8" src="/ueditor/lang/zh-cn/zh-cn.js"> </script>
+
+    <script type="text/javascript" src="/javascripts/common/baseManage.js"></script>
     <script type="text/javascript" src="/javascripts/main.js"></script>
+    <script type="text/javascript" src="/javascripts/user.js"></script>
 </head>
 <body>
     <div class="easyui-layout" data-options="fit:true">
@@ -44,25 +49,10 @@
         </div>
         <div data-options="region:'south',split:true" style="height:30px;"></div>
         <div data-options="region:'west',split:true" title="系统操作菜单" style="width:160px;">
-            <div class="easyui-accordion" data-options="fit:true, border: false">
-                <div title="系统管理" data-options="iconCls:'icon-ok'">
-                    <ul class="easyui-tree" data-options="lines:true">
-                        <li>用户管理</li>
-                        <li>角色管理</li>
-                        <li>数据字典</li>
-                    </ul>
-                </div>
-                <div title="帮助" data-options="iconCls:'icon-help'">
-                    <ul class="easyui-tree" data-options="lines:true">
-                        <li>系统手册</li>
-                        <li>售后客服</li>
-                        <li>问题反馈</li>
-                    </ul>
-                </div>
-            </div>
+            <ul id="sysMenuTree" class="easyui-tree" data-options="lines:true, url: '/manage/menu',method:'get'"></ul>
         </div>
         <div data-options="region:'center'">
-            <div class="easyui-tabs" data-options="tools:'#tab-tools', border: false, fit: true">
+            <div id="manageTabs" class="easyui-tabs" data-options="border: false, fit: true">
                 <div title="主页"></div>
             </div>
         </div>

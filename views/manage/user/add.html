@@ -1,0 +1,24 @@
+<form action="/manage/user/add" method="post" id="add_user_form">
+    <table class="common_table">
+        <tr>
+            <th width="30%" align="right">用户名：</th>
+            <td width="70%"><input class="input_240 easyui-validatebox" data-options="required:true" type="text" name="username"/></td>
+        </tr>
+        <tr>
+            <th width="30%" align="right">密码：</th>
+            <td width="70%"><input class="input_240 easyui-validatebox" data-options="required:true" type="text" name="password"/></td>
+        </tr>
+        <tr>
+            <th width="30%" align="right">年龄：</th>
+            <td width="70%"><input class="input_240" type="text" name="age"/></td>
+        </tr>
+        <tr>
+            <th width="30%" align="right">生日：</th>
+            <td width="70%"><input class="input_240" type="text" name="birthday"/></td>
+        </tr>
+    </table>
+</form>
+<div class="floatright absolute_right_botton_10px">
+    <a href="javascript:void(0)" class="easyui-linkbutton" onclick="user.add()">保存</a>
+    <a href="javascript:void(0)" class="easyui-linkbutton" onclick="user.cancelAdd()">关闭</a>
+</div>

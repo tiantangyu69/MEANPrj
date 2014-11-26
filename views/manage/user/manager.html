@@ -1,0 +1,75 @@
+<div id="userToolBar" style="padding:5px;height:auto">
+    <div style="margin-bottom:5px">
+        <form id="userQueryForm">
+            <table width="100%" style="font-size:12px;">
+                <tr>
+                    <td width="340">
+                        <span>用户名：</span>
+                        <input type="text" style="width: 240px" class="easyui-textbox" />
+                    </td>
+                    <td width="340">
+                        <span>所属部门：</span>
+                        <input style="width: 240px" name="department" class="easyui-combotree" data-options="method:'get'"/>
+                    </td>
+                    <td align="left">
+                        <a class="easyui-linkbutton" onclick="doUserSearch();" icon="icon-search">查询</a>&nbsp;&nbsp;&nbsp;&nbsp;
+                        <a class="easyui-linkbutton" onclick="javascript:$('#manageUserQueryForm').form('clear');" icon="icon-undo">重置</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <span>手机号：</span>
+                        <input type="text" style="width: 240px" class="easyui-numberbox" />
+                    </td>
+                    <td>
+                        <span>电子邮箱：</span>
+                        <input type="text" style="width: 240px" class="easyui-textbox" />
+                    </td>
+                    <td align="center"></td>
+                </tr>
+            </table>
+        </form>
+        <a class="easyui-linkbutton" icon="icon-add" plain="true" onclick="user.toAdd(600, 250, '添加用户');">添加用户</a>
+        <a class="easyui-linkbutton" icon="icon-edit" plain="true" onclick="user.toEdit(600, 250, '修改用户');">修改用户</a>
+        <a class="easyui-linkbutton" icon="icon-reload" plain="true" onclick="user.resetPassword();">重置密码</a>
+        <a class="easyui-linkbutton" icon="icon-remove" plain="true" onclick="user.deleteByIds();">删除用户</a>
+    </div>
+</div>
+
+<table id="userTable" class="easyui-datagrid" data-options="
+    pageList : [15,30,50,100],
+    pageSize : 15,
+    url : '/manage/user/query',
+    rownumbers : true,
+    pagination : true,
+    toolbar : '#userToolBar',
+    striped : true,
+    fitColumns : true,
+    border : false,
+    fit : true">
+    <thead>
+        <tr>
+            <th data-options="field : '_id', checkbox : true" width="10">id</th>
+            <th data-options="field : 'username'" width="10">用户名</th>
+            <th data-options="field : 'password'" width="10">密码</th>
+            <th data-options="field : 'age'" width="10">年龄</th>
+            <th data-options="field : 'birthday', formatter:birthdayFormatter" width="10">出生日期</th>
+        </tr>
+    </thead>
+</table>
+<div id="add_user_Window" title="添加用户"></div>
+<div id="edit_user_Window" title="修改用户"></div>
+<script type="text/javascript">
+    function doUserSearch(){
+        var params = $('#userTable').datagrid('options').queryParams; //先取得 datagrid 的查询参数
+        var fields =$('#userQueryForm').serializeArray(); //自动序列化表单元素为JSON对象
+        $.each( fields, function(i, field){
+            params[field.name] = field.value; //设置查询参数
+        });
+        $('#userTable').datagrid('reload'); //设置好查询参数 reload 一下就可以了
+    }
+
+    function birthdayFormatter(val){
+        return new Date(val).Format('yyyy-MM-dd');
+    }
+</script>

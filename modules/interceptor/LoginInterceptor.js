@@ -3,7 +3,7 @@
  */
 var express = require('express');
 var router = express.Router();
-var stringUtil = require('../util/StringUtil');
+var StringUtil = require('../util/StringUtil');
 
 router.use(function (req, res, next) {
     //res.locals.title = config['title']
@@ -14,7 +14,7 @@ router.use(function (req, res, next) {
     //console.log('%s %s', req.method, req.url);
 
     // session过时或未登录直接跳到登录页面
-    if(stringUtil.startWith(req.url, "/manage/")){
+    if(StringUtil.startWith(req.url, "/manage/")){
         if(req.url == "/manage/login"){
             next();
         } else{

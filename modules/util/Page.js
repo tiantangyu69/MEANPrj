@@ -4,13 +4,10 @@
  */
 
 function Page(currentPage, pageSize, totalCount, dataList){
-    currentPage = currentPage || 1;
-    pageSize = pageSize || 15;
-
-    this.currentPage = currentPage;
-    this.pageSize = pageSize;
-    this.dataList = dataList;
-    this.totalCount = totalCount;
+    this.currentPage = currentPage || 1;
+    this.pageSize = pageSize || 15;
+    this.dataList = dataList || [];
+    this.totalCount = totalCount || 0;
     this.totalPage = this.calculateTotalPages(this.pageSize, this.totalCount);
 }
 

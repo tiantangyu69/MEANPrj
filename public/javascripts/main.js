@@ -20,6 +20,22 @@ Date.prototype.Format = function (fmt) { //author: meizz
 $(function(){
     var nowTime = new Date().Format('yyyy年MM月dd日');
     $("#time").text(nowTime);
+
+    var win = $.messager.progress({
+        msg:'请稍等，正在加载数据...'
+    });
+    setTimeout(function(){
+        $.messager.progress('close');
+    },1000);
+
+    // 系统操作菜单单击事件
+    $("#sysMenuTree").tree({
+        onClick: function(node){
+            if(node.attributes && node.attributes.url){
+                setmain(node.text, node.attributes.url);
+            }
+        }
+    });
 });
 
 function mangeUserLogout(href){
@@ -28,4 +44,19 @@ function mangeUserLogout(href){
             window.location.href = href;
         }
     });
+}
+
+function setmain(title, href) {
+    // 判断选项卡是否已经存在，存在则不再添加该选项卡并将该选项卡选中
+    if($('#manageTabs').tabs('exists', title)){
+        $('#manageTabs').tabs('select', title);
+    }else{
+        $('#manageTabs').tabs('add',{
+            title:title,
+            href : href,
+            closable:true,
+            cache : true,
+            iconCls:'icon-mini-add'
+        });
+    }
 }

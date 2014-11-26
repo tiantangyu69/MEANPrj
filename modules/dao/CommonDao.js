@@ -178,7 +178,7 @@ CommonDao.prototype.queryPageAndSort = function(currentPage, pageSize, query, so
     queryOpt.sort(sort).limit(pageSize);
     queryOpt.skip((currentPage - 1) * pageSize);
     queryOpt.exec(function (err, data) {
-        if(err) return callback(null);
+        if(err) return callback(new page(currentPage, pageSize, 0, []));
 
         $this.model.count(query, function (error, count) {
             if (error) return callback(null);
