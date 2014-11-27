@@ -1,0 +1,21 @@
+<form action="/manage/user/edit" method="post" id="edit_user_form">
+    <input type="hidden" name="id" value="<%=user._id%>"/>
+    <table class="common_table">
+        <tr>
+            <th width="30%" align="right">用户名：</th>
+            <td width="70%"><input class="input_240 easyui-validatebox" data-options="required:true" type="text" name="username" value="<%=user.username%>"/></td>
+        </tr>
+        <tr>
+            <th width="30%" align="right">年龄：</th>
+            <td width="70%"><input class="input_240 easyui-numberbox" type="text" name="age" value="<%=user.age%>"/></td>
+        </tr>
+        <tr>
+            <th width="30%" align="right">生日：</th>
+            <td width="70%"><input class="Wdate input_240" type="text" name="birthday" readonly="readonly" value="<%=:user.birthday | date%>" onclick="WdatePicker();"/></td>
+        </tr>
+    </table>
+</form>
+<div class="floatright absolute_right_botton_10px">
+    <a href="javascript:void(0)" class="easyui-linkbutton" onclick="user.edit()">保存</a>
+    <a href="javascript:void(0)" class="easyui-linkbutton" onclick="user.cancelEdit()">关闭</a>
+</div>

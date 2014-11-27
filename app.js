@@ -8,6 +8,8 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var multer = require('multer');
 var mongoose = require('mongoose');
+var ejs = require('ejs');
+var moment = require('moment');
 
 var loginInterceptor = require('./modules/interceptor/LoginInterceptor');
 var ueditorRouter = require('./modules/routes/UeditorRouter');
@@ -19,8 +21,16 @@ var app = express();
 
 // 视图引擎设置
 app.set('views', path.join(__dirname, 'views'));
-app.engine('html', require('ejs').renderFile);
+app.engine('html', ejs.renderFile);
 app.set('view engine', 'html');
+
+ejs.filters.date = function(obj, format){
+    if (format == undefined) {
+        format = 'YYYY-MM-DD';
+    }
+    var ret = moment(obj).format(format);
+    return ret == 'Invalid date' ? '0000-00-00 00:00:00' : ret;
+};
 
 // 在/public目录下配置网站的 favicon
 //app.use(favicon(__dirname + '/public/favicon.ico'));

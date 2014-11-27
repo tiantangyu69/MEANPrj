@@ -5,11 +5,11 @@
                 <tr>
                     <td width="340">
                         <span>用户名：</span>
-                        <input type="text" style="width: 240px" class="easyui-textbox" />
+                        <input type="text" style="width: 240px" class="easyui-textbox" name="username"/>
                     </td>
                     <td width="340">
                         <span>所属部门：</span>
-                        <input style="width: 240px" name="department" class="easyui-combotree" data-options="method:'get'"/>
+                        <input style="width: 240px" class="easyui-combotree" data-options="method:'get'"/>
                     </td>
                     <td align="left">
                         <a class="easyui-linkbutton" onclick="doUserSearch();" icon="icon-search">查询</a>&nbsp;&nbsp;&nbsp;&nbsp;
@@ -51,7 +51,6 @@
         <tr>
             <th data-options="field : '_id', checkbox : true" width="10">id</th>
             <th data-options="field : 'username'" width="10">用户名</th>
-            <th data-options="field : 'password'" width="10">密码</th>
             <th data-options="field : 'age'" width="10">年龄</th>
             <th data-options="field : 'birthday', formatter:birthdayFormatter" width="10">出生日期</th>
         </tr>

@@ -236,13 +236,28 @@ CommonDao.prototype.deleteByQuery = function(query, callback){
 }
 
 /**
+ * 根据对象的id修改对象
+ * @param id
+ * @param update
+ * @param callback
+ */
+CommonDao.prototype.updateById = function(id, update, callback){
+    this.update({_id: id}, update, function(err){
+        callback(err);
+    })
+};
+
+/**
  * 按条件更新数据
  * @param query 查询条件
  * @param update 更新数据
  * @param callback 回调函数
  */
 CommonDao.prototype.update = function (query, update, callback) {
-    this.model.update(query, update, null, function (error) {
+    if(update.id){
+        delete update.id;
+    }
+    this.model.update(query, {$set: update}, null, function (error) {
         if (error) return callback(error);
 
         return callback(null);

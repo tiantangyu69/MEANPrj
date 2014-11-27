@@ -71,7 +71,7 @@ function baseManage(module){
 			title : title,
 			modal : true,
 			iconCls : "icon-edit",
-			href : "manage/" + module + "/toEdit?id=" + rows[0].id
+			href : "/manage/" + module + "/edit?id=" + rows[0]._id
 		});
 	};
 	
@@ -125,9 +125,9 @@ function baseManage(module){
 	        	var rows = $("#" + module + "Table").datagrid('getSelections');
 	        	var ids = new Array();
 	        	$.each(rows,function(i,n){
-	        		ids.push({name : "ids", value : n._id});
+	        		ids.push(n._id);
 	        	});
-	        	$.post('/manage/' + module + '/deleteByIds', ids,function(result){
+	        	$.post('/manage/' + module + '/deleteByIds', {ids: ids},function(result){
 					if(result && result.showDialog){
 						if(result.status == RESULT.ERROR){
 							$.messager.alert('错误',result.msg, 'error');

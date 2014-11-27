@@ -5,16 +5,12 @@
             <td width="70%"><input class="input_240 easyui-validatebox" data-options="required:true" type="text" name="username"/></td>
         </tr>
         <tr>
-            <th width="30%" align="right">密码：</th>
-            <td width="70%"><input class="input_240 easyui-validatebox" data-options="required:true" type="text" name="password"/></td>
-        </tr>
-        <tr>
             <th width="30%" align="right">年龄：</th>
-            <td width="70%"><input class="input_240" type="text" name="age"/></td>
+            <td width="70%"><input class="input_240 easyui-numberbox" type="text" name="age"/></td>
         </tr>
         <tr>
             <th width="30%" align="right">生日：</th>
-            <td width="70%"><input class="input_240" type="text" name="birthday"/></td>
+            <td width="70%"><input class="Wdate input_240" type="text" name="birthday" readonly="readonly" onclick="WdatePicker();"/></td>
         </tr>
     </table>
 </form>
