@@ -16,7 +16,7 @@ function baseManage(module){
 			title : title,
 			modal : true,
 			iconCls : "icon-add",
-			href : "/manage/" + module + "/add"
+			href : "/manage/" + module + "/add?num=" + Math.random()
 		});
 	};
 	
@@ -44,8 +44,8 @@ function baseManage(module){
 							$.messager.alert('提示',result.msg, 'info');
 						}
 					}
-					$("#" + module + "Table").datagrid("reload");
 					$("#add_" + module + "_Window").window('close');
+					$("#" + module + "Table").datagrid("reload");
 				});
 			}
 		}
@@ -71,7 +71,7 @@ function baseManage(module){
 			title : title,
 			modal : true,
 			iconCls : "icon-edit",
-			href : "/manage/" + module + "/edit?id=" + rows[0]._id
+			href : "/manage/" + module + "/edit?id=" + rows[0]._id + "&num=" + Math.random()
 		});
 	};
 	
@@ -99,8 +99,8 @@ function baseManage(module){
 							$.messager.alert('提示',result.msg, 'info');
 						}
 					}
-					$("#" + module + "Table").datagrid("reload");
 					$("#edit_" + module + "_Window").window('close');
+					$("#" + module + "Table").datagrid("reload");
 				});
 			}
 		}

@@ -56,3 +56,5 @@ body {
     text-decoration: underline;cursor: pointer;
 }
 .light_gray{color: #999999; text-decoration: none;}
+
+.window_footer{ text-align: right; padding: 5px;}

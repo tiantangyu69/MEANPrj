@@ -26,6 +26,10 @@ $(function(){
 						$("#preload").hide();
 					} else if(result.status == 1){
 						window.location.href = "/manage/main";
+					} else if(result.status == 0){
+						$("#errorImage").show();
+						$("#errorMsg").text(result.msg);
+						$("#preload").hide();
 					} else{
 						$("#errorImage").show();
 						$("#errorMsg").text("系统错误，请稍后重试！");

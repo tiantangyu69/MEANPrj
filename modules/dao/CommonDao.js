@@ -257,7 +257,7 @@ CommonDao.prototype.update = function (query, update, callback) {
     if(update.id){
         delete update.id;
     }
-    this.model.update(query, {$set: update}, null, function (error) {
+    this.model.update(query, {$set: update}, { multi: true }, function (error) {
         if (error) return callback(error);
 
         return callback(null);

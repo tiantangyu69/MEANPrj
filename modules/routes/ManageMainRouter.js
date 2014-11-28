@@ -12,7 +12,6 @@ router.get('/manage/menu', function(req, res){
     var treeData = [{
         "id":1,
         "text":"系统管理",
-        "iconCls":"icon-ok",
         "children":[{
             id: 2,
             "text":"用户管理",
@@ -22,14 +21,7 @@ router.get('/manage/menu', function(req, res){
         },{
             id: 3,
             "text":"用户权限",
-            "iconCls":"icon-lock",
-            "children":[{
-                id: 4,
-                "text":"角色管理"
-            },{
-                "id": 8,
-                "text":"权限管理"
-            }]
+            "iconCls":"icon-lock"
         }]
     },{
         id: 9,

@@ -17,8 +17,12 @@ router.post("/manage/login", function (req, res) {
     req.body.password = CryptoUtil.md5(req.body.password);// 使用md5加密密码
     UserDao.findOne(req.body, function(user){
         if(null != user){
-            req.session.user = user;
-            res.json({status: 1, msg: '登录成功！'});
+            if(user.status == 1){
+                req.session.user = user;
+                res.json({status: 1, msg: '登录成功！'});
+            } else{// 用户被停用
+                res.json({status: 0, msg: '您的账号已被停用，如有问题请联系管理员！'});
+            }
         } else{
             res.json({status: -1, msg: '您输入的账号或密码错误，请重新输入！'});
         }
@@ -47,14 +51,17 @@ router.post("/manage/user/query", function(req, res){
     var currentPage = req.body.page;
     var pageSize = req.body.rows;
 
-    console.log({username: / + req.body.username + /});
-
-    UserDao.queryPageAndSort(currentPage, pageSize, {username: /req.body.username/}, {createDate: -1},function(page){
-        var result = {};
-        result.total = page.totalCount;
-        result.rows = page.dataList;
-        res.json(result);
-    });
+    UserDao.queryPageAndSort(currentPage, pageSize, {
+            username: new RegExp(req.body.username),
+            telephone: new RegExp(req.body.telephone)
+        }, {createDate: -1} ,
+        function(page){
+            var result = {};
+            result.total = page.totalCount;
+            result.rows = page.dataList;
+            res.json(result);
+        }
+    );
 });
 
 /**
@@ -110,6 +117,19 @@ router.post("/manage/user/edit", function(req, res){
             res.json({status: 1, msg: '用户修改成功！', showDialog: true});
         } else{
             res.json({status: 0, msg: '用户修改失败！', showDialog: true});
+        }
+    });
+});
+
+/**
+ * 重置密码
+ */
+router.post("/manage/user/resetpwd", function(req, res){
+    UserDao.update({_id: {$in: req.body.ids}}, {password: CryptoUtil.md5('111111')}, function(err){
+        if(null == err){
+            res.json({status: 1, msg: '密码重置成功！', showDialog: true});
+        } else{
+            res.json({status: 0, msg: '密码重置失败！', showDialog: true});
         }
     });
 });

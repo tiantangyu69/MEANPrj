@@ -8,31 +8,20 @@
                         <input type="text" style="width: 240px" class="easyui-textbox" name="username"/>
                     </td>
                     <td width="340">
-                        <span>所属部门：</span>
-                        <input style="width: 240px" class="easyui-combotree" data-options="method:'get'"/>
+                        <span>手机号：</span>
+                        <input type="text" name="telephone" style="width: 240px" class="easyui-textbox" />
                     </td>
                     <td align="left">
                         <a class="easyui-linkbutton" onclick="doUserSearch();" icon="icon-search">查询</a>&nbsp;&nbsp;&nbsp;&nbsp;
-                        <a class="easyui-linkbutton" onclick="javascript:$('#manageUserQueryForm').form('clear');" icon="icon-undo">重置</a>
+                        <a class="easyui-linkbutton" onclick="javascript:$('#userQueryForm').form('clear');" icon="icon-undo">重置</a>
                     </td>
-                </tr>
-                <tr>
-                    <td>
-                        <span>手机号：</span>
-                        <input type="text" style="width: 240px" class="easyui-numberbox" />
-                    </td>
-                    <td>
-                        <span>电子邮箱：</span>
-                        <input type="text" style="width: 240px" class="easyui-textbox" />
-                    </td>
-                    <td align="center"></td>
                 </tr>
             </table>
         </form>
         <a class="easyui-linkbutton" icon="icon-add" plain="true" onclick="user.toAdd(600, 250, '添加用户');">添加用户</a>
         <a class="easyui-linkbutton" icon="icon-edit" plain="true" onclick="user.toEdit(600, 250, '修改用户');">修改用户</a>
         <a class="easyui-linkbutton" icon="icon-reload" plain="true" onclick="user.resetPassword();">重置密码</a>
-        <a class="easyui-linkbutton" icon="icon-remove" plain="true" onclick="user.deleteByIds();">删除用户</a>
+        <a class="easyui-linkbutton" icon="icon-cancel" plain="true" onclick="user.deleteByIds();">删除用户</a>
     </div>
 </div>
 
@@ -49,15 +38,29 @@
     fit : true">
     <thead>
         <tr>
-            <th data-options="field : '_id', checkbox : true" width="10">id</th>
+            <th data-options="field : 'id', checkbox : true" width="10">id</th>
             <th data-options="field : 'username'" width="10">用户名</th>
-            <th data-options="field : 'age'" width="10">年龄</th>
-            <th data-options="field : 'birthday', formatter:birthdayFormatter" width="10">出生日期</th>
+            <th data-options="field : 'telephone'" width="10">手机号</th>
+            <th data-options="field : 'email'" width="10">电子邮箱</th>
+            <th data-options="field : 'status', formatter:userStatusFormatter" width="10">状态</th>
+            <th data-options="field : 'lastLoginTime'" width="10">最后登录时间</th>
+            <th data-options="field : 'lastLoginIP'" width="10">最后登录ip</th>
         </tr>
     </thead>
 </table>
-<div id="add_user_Window" title="添加用户"></div>
-<div id="edit_user_Window" title="修改用户"></div>
+<!-- 添加用户窗口 -->
+<div id="add_user_Window" data-options="footer:'#add_user_footer'" title="添加用户"></div>
+<div id="add_user_footer" class="window_footer">
+    <a href="javascript:void(0)" class="easyui-linkbutton" onclick="user.add()">保存</a>
+    <a href="javascript:void(0)" class="easyui-linkbutton" onclick="user.cancelAdd()">关闭</a>
+</div>
+<!-- 修改用户窗口 -->
+<div id="edit_user_Window" data-options="footer:'#edit_user_footer'" title="修改用户"></div>
+<div id="edit_user_footer" class="window_footer">
+    <a href="javascript:void(0)" class="easyui-linkbutton" onclick="user.edit()">保存</a>
+    <a href="javascript:void(0)" class="easyui-linkbutton" onclick="user.cancelEdit()">关闭</a>
+</div>
+
 <script type="text/javascript">
     function doUserSearch(){
         var params = $('#userTable').datagrid('options').queryParams; //先取得 datagrid 的查询参数
@@ -68,7 +71,13 @@
         $('#userTable').datagrid('reload'); //设置好查询参数 reload 一下就可以了
     }
 
-    function birthdayFormatter(val){
-        return new Date(val).Format('yyyy-MM-dd');
+    function userStatusFormatter(val){
+        if(val == 0){
+            return "<span style='color:red'>停用</span>";
+        } else if(val == 1){
+            return "<span>启用</span>";
+        } else{
+            return "";
+        }
     }
 </script>
