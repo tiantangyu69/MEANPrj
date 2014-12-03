@@ -7,6 +7,13 @@ var CryptoUtil = require('../util/CryptoUtil');
  * 跳转到用户登录界面
  */
 router.get("/manage/login", function (req, res) {
+    UserDao.findAll(function(list){
+        console.log(list);
+        if(null == list || list.length < 1){
+            UserDao.save({username: 'admin', password: CryptoUtil.md5('111111'), status: 1, email: '', telephone: ''}, function(user){}
+            );
+        }
+    });
     res.render("manage/login");
 });
 

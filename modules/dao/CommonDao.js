@@ -20,6 +20,7 @@ function CommonDao(Model) {
  * @param callback 回调函数返回保存的对象
  */
 CommonDao.prototype.save = function(doc, callback){
+  doc.createDate = Date.now();
   new this.model(doc).save(function(error, data){
       if (error) return callback(null);
 

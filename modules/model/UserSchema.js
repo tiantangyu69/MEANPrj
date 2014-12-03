@@ -11,8 +11,8 @@ var userSchema = new mongoose.Schema({
     status: Number,
     lastLoginIP: String,
     lastLoginTime: Date,
-    birthday: {type: Date, default: Date.now()},
-    createDate: {type: Date, default: Date.now()}
+    birthday: Date,
+    createDate: Date
 });
 
 var user = mongoose.model('user', userSchema);
